@@ -1,0 +1,15 @@
+---
+title: "ggplot"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| output: false
+#| message: false
+library(tidyverse)
+```
+
+## Intro ggplot
