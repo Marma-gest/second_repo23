@@ -57,7 +57,76 @@ ggarrange(gg1, gg2,
 ```{r}
 ggplot(
   data = mtcars, 
-  mapping = aes(x = disp, y = mpg, colour = cyl)
+  mapping = aes(x = disp, y = mpg,
+                colour = factor(am),
+                  shape = factor(cyl), 
+                size = qsec,
+                alpha = wt)
   ) + 
   geom_point()
+```
+
+```{r}
+ggplot(data = mtcars, mapping= aes(x = disp, y = mpg, color = factor(cyl), shape = factor(am), size = hp)) + geom_point()
+```
+
+```{r}
+ggplot() +
+  geom_point(data = mtcars,
+             mapping = aes(
+               x = disp, 
+               y = mpg, 
+               colour = factor(cyl), 
+               alpha = 3.6*(0.25*1609.347)/qsec,
+                shape = factor(ifelse(am, "Man", "Aut"))),  
+              size = 4
+             ) +
+  labs(
+    colour = "cyl", 
+    alpha = "speed\n(km/h)", 
+    shape = "trans-\nmission")
+```
+
+```{r}
+ggplot() +
+  geom_point(
+    data = mtcars,
+    mapping = aes(
+      x = disp,
+      y = mpg, 
+      colour = factor(cyl), 
+      size = 3.6*(0.25*1609.347)/qsec, 
+      shape = factor(
+        # Note codeing am
+        # 0 automatic, 1 manual
+        ifelse(
+          am, 
+          "Aut", 
+          "Man"
+          )
+        )
+      )
+    ) +
+  labs(
+    colour = "cyl", 
+    size = "speed\n(km/h)", 
+    shape = "trans-\nmission"
+    ) +
+  geom_smooth(
+    data = mtcars, 
+    mapping = aes(x = disp, y = mpg), 
+    span = 0.5, 
+    level = 0.99,
+    ) + geom_smooth(
+    data = mtcars, 
+    mapping = aes(x = disp, y = mpg), 
+    span = 0.5, 
+    level = 0.95,
+    ) + geom_smooth(
+      data = mtcars, 
+      mapping = aes(x = disp, y = mpg), 
+      method = lm, 
+      se = FALSE, 
+      color = "red" 
+      )
 ```
