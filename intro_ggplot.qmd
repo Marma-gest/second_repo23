@@ -279,4 +279,4 @@ ggplot(
     )
 ```
 
-##  \~ = ctrl+alt+\^+mellomrom
+## \~ = ctrl+alt+\^+mellomrom
