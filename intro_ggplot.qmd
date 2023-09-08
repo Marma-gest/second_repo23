@@ -280,3 +280,35 @@ ggplot(
 ```
 
 ## \~ = ctrl+alt+\^+mellomrom
+
+```{r}
+X10540 <- read_excel("10540_20230908-104555.xlsx", 
+    skip = 2)
+```
+
+```{r}
+View(X10540)
+```
+
+csv_fil
+
+```{r}
+X10540 <- read_delim(
+  file = "10540_20230908-114924.csv",
+    delim = ";", 
+    escape_double = FALSE, 
+    locale = locale(
+      date_names = "nb", 
+        encoding = "ISO-8859-1"
+      ), 
+    trim_ws = TRUE, 
+    skip = 1, 
+    show_col_types = FALSE
+    )
+```
+
+se csv fil:
+
+```{r}
+View(X10540)
+```
