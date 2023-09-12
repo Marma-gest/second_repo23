@@ -312,3 +312,48 @@ se csv fil:
 ```{r}
 View(X10540)
 ```
+
+PxWebApiData
+
+```{r}
+
+
+metadata_10540_en <- ApiData(
+  "http://data.ssb.no/api/v0/en/table/10540",
+  returnMetaFrames = TRUE
+  )
+```
+
+```{r}
+metadata_10540_no <- ApiData(
+  "https://data.ssb.no/api/v0/no/table/13891/",
+  returnMetaFrames = TRUE
+  )
+```
+
+```{r}
+unemp99to02 <- ApiData12(
+  "http://data.ssb.no/api/v0/en/table/10540",
+  # Have not been able to specify more complex regions
+  Region = list("11*"),
+  Tid = c(paste(
+    rep(1999:2002, each = 12), 
+    "M",
+    sprintf("%02d", 1:12), 
+    sep = "")
+    )
+  )
+```
+
+```{r}
+paste(
+    rep(1999:2002, each = 12), 
+    "M",
+    sprintf("%02d", 1:12), 
+    sep = "")
+
+```
+
+```{r}
+rep(1999:2002, each = 12)
+```
