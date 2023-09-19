@@ -1,0 +1,93 @@
+---
+title: "nycflights"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+library(tidyverse)
+library(nycflights13)
+
+```
+
+```{r}
+flights <- flights
+```
+
+```{r}
+dim(flights)
+```
+
+```{r}
+class(flights)
+```
+
+```{r}
+#| paged.print: false
+flights
+```
+
+```{r}
+#| paged.print: false
+flights |> 
+  arrange(desc(month), desc(day))
+```
+
+```{r}
+#|paged.print: false
+flights <- flights |> 
+  arrange(month, day, desc(dep_time))
+```
+
+```{r}
+#| paged.print: false
+flights |>
+filter(month == 1, day == 1) |>
+ print(
+   n = 5, 
+   width = 80
+  )
+```
+
+```{r}
+summary(flights)
+```
+
+```{r}
+flights |> 
+  filter(month %in% c(4, 9)) |> 
+  nrow()
+```
+
+```{r}
+#| paged.print: false
+flights |> 
+  group_by(month) |> 
+  summarise(antall_flyvninger = n())
+```
+
+```{r}
+#| paged.print: false
+flights |> 
+  filter(month == 1) |> 
+  group_by(day) |> 
+  count() |> 
+  print(n = 31)
+```
+
+```{r}
+#| paged.print: false
+flights |> 
+  filter(month == 1) |> 
+  group_by(day) |> 
+  count() |> 
+  arrange(desc(n)) |> 
+  print(n = 1)
+```
+
+```{r}
+flights |> filter(day %in% c(1,2)) |> 
+           nrow()
+
+```
