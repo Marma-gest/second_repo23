@@ -1,0 +1,34 @@
+---
+title: "Rot_i_R"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| output: false
+#| massage: false
+#| echo: false
+    
+library(tidyverse)
+library(nycflights13)
+library(gridExtra)
+library(modelr)
+library(grid)
+library(ggplotify)
+library(vtable)
+```
+
+```{r}
+tib <- tibble(
+  x = 1:5,
+  y = seq(from = 2.5, by = 0.12, length.out = 5),
+  z = x + y^0.5,
+  # What does the next one do?
+  d = LETTERS[seq_along(y) + 10]
+)
+```
+
+```{r}
+tib
+```
