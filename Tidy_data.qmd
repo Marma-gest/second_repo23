@@ -1,0 +1,11 @@
+---
+title: "Tidy_data"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| echo: false
+library(tidyverse)
+```
