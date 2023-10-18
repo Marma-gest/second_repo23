@@ -8,4 +8,229 @@ editor: visual
 #| label: setup
 #| echo: false
 library(tidyverse)
+
+```
+
+```{r}
+table4a
+```
+
+```{r}
+tidy4a <- table4a %>% 
+  pivot_longer(cols = -country,
+               names_to = "year", 
+               values_to = "cases")
+tidy4a
+```
+
+```{r}
+tidy4b <- table4b %>% 
+  pivot_longer(
+    cols = -country,
+    names_to = "year",
+    values_to = "pop"
+  )
+tidy4b
+```
+
+```{r}
+tidy4 <- tidy4a %>% 
+  left_join(tidy4b, by = c("country", "year"))
+tidy4
+```
+
+```{r}
+table2[1:3,]
+```
+
+```{r}
+(tidy2 <- table2 %>% 
+  pivot_wider(names_from = type,
+              values_from = count))
+```
+
+```{r}
+table3[1:3,] 
+```
+
+```{r}
+tidy3 <- table3 %>% 
+  separate(col = rate,
+           into = c("cases", "pop"),
+           sep = "/"
+           )
+tidy3[1:5,]
+```
+
+```{r}
+table3[1:3,] 
+```
+
+```{r}
+tidy3 <- table3 %>% 
+  separate(col = rate,
+           into = c("cases", "pop"),
+           sep = "/",
+           convert = TRUE
+           )
+# cases and pop now int, not chr
+tidy3[1:3,]
+```
+
+```{r}
+tidy3century <- tidy3 %>% 
+  separate(col = year,
+           into = c("century", "year"),
+           sep = 2
+           )
+tidy3century
+```
+
+```{r}
+tidy3century[1:3,]
+```
+
+```{r}
+tidy3century %>% 
+  unite(
+    col = "year",
+    century, year, # the columns we want to unite
+    sep = "" # what happens witout sep?
+  )
+```
+
+```{r}
+stocks <- tibble(
+  year   = c(2015, 2015, 2015, 
+             2015, 2016, 2016, 2016),
+  qtr    = c(   1,    2,    3,    
+                4,    2,    3,    4),
+  return = c(1.88, 0.59, 0.35,
+             NA, 0.92, 0.17, 2.66)
+)
+stocks
+```
+
+```{r}
+stocks_wider <- stocks %>% 
+  pivot_wider(
+    names_from = year,
+    values_from = return
+    )
+stocks_wider
+```
+
+```{r}
+stocks_wider %>% 
+  pivot_longer(
+    cols = -qtr,
+    names_to = "year", # in quote since it does not exist yet
+    values_to = "return",
+    values_drop_na = TRUE
+  ) %>% 
+  arrange(year, qtr)
+```
+
+```{r}
+stocks %>% 
+  complete(year, qtr)
+```
+
+```{r}
+treatment <- tribble(
+  ~ person,           ~ treatment, ~response,
+  "Derrick Whitmore", 1,           7,
+  NA,                 2,           10,
+  NA,                 3,           9,
+  "Katherine Burke",  1,           4
+)
+treatment
+```
+
+```{r}
+treatment <- tribble(
+  ~ person,           ~ treatment, ~response,
+  "Derrick Whitmore", 1,           7,
+  NA,                 2,           10,
+  NA,                 3,           9,
+  "Katherine Burke",  1,           4
+)
+treatment
+```
+
+```{r}
+treatment %>% 
+  fill(person, .direction = c("down"))
+```
+
+```{r}
+treatment %>% 
+  fill(person, .direction = c("up"))
+```
+
+```{r}
+dim(who)
+```
+
+```{r}
+who[1:3, ]
+```
+
+```{r}
+# find type of vector with a pipe
+typeof_who <- who %>% 
+  map(typeof) %>% 
+  unlist()
+# print typeof_who
+typeof_who
+```
+
+```{r}
+# tabulate typeof_who
+table(typeof_who)
+```
+
+```{r}
+who <- tidyr::who
+```
+
+```{r}
+who <- who |> 
+  pivot_longer(
+    cols = -c(country:year), 
+    names_to = "catogories", 
+    values_to = "values")
+```
+
+```{r}
+who <- who |> 
+  mutate(
+    catogories = str_replace(
+      catogories, 
+      "newrel", "new_rel"
+    ), catogories = str_replace(catogories, "new_", "")
+  ) |> separate(
+    col = catogories, 
+    into = c("type", "genderAge"), sep = "_"
+  ) |> 
+  separate(
+    col = genderAge, into = c("gender", "Age"), 
+    sep = 1
+  ) |> 
+  mutate(
+    Age = str_replace(Age, "65", "6599")
+  ) |> 
+  separate(
+    col = Age,
+    into = c("AgeStart", "AgeEnd"), 
+    sep = -2
+  )
+```
+
+```{r}
+temp <- who |> 
+  unite(
+    col = "age", AgeStart, AgeEnd, 
+    sep = "_"
+  )
 ```
