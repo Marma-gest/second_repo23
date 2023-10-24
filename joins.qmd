@@ -1,0 +1,80 @@
+---
+title: "Joins"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| echo: false
+library(tidyverse)
+library(nycflights13)
+```
+
+```{r}
+head(airlines, n = 3)
+```
+
+```{r}
+flights %>% 
+  select(year:day, carrier, everything()) %>% 
+  group_by(carrier) %>% 
+  summarise(first(dep_time)) %>% 
+  head(, n= 3)
+```
+
+```{r}
+my_flights <- flights 
+my_flights <- my_flights%>% 
+  left_join(airlines, by = "carrier")
+
+my_flights %>% 
+  select(carrier, name, everything()) %>% 
+  head(3)
+```
+
+```{r}
+flights <- flights
+```
+
+```{r}
+names(flights)
+```
+
+```{r}
+airlines
+
+```
+
+```{r}
+temp <- left_join(flights, airlines, join_by(carrier)) |> 
+  select(carrier, airline_name = name, everything())
+```
+
+```{r}
+flights <- flights |> 
+  left_join(airlines, join_by(carrier)) |> 
+  select(carrier, airline_name = name, everything())
+```
+
+Det samme i en pipe:
+
+```{r}
+tmp <- flights |> 
+  left_join(airlines, join_by(carrier)) |> 
+  select(carrier, airline_name = name, everything())
+```
+
+```{r}
+nyc_airlines <- airports |> filter(faa %in% c('JFK', 'LGA', 'EWR'))
+```
+
+```{r}
+nf <- names(flights)
+nf[nf %in% names(planes)]
+```
+
+```{r}
+flights <- flights |> 
+  left_join(select(planes, year_man = year, everything()), join_by(tailnum))
+```
